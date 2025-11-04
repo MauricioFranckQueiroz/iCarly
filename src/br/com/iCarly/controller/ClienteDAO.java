@@ -9,10 +9,13 @@ import java.util.ArrayList;
 import br.com.iCarly.model.Cliente;
 
 public class ClienteDAO implements DAO<Cliente>{
+	private PSQLConnection c;
+	public ClienteDAO() {
+		 c = new PSQLConnection();
+	}
 
 	@Override
 	public Cliente get(long id) throws SQLException {
-		PSQLConnection c = new PSQLConnection();
 		c.abrirConexao();
 		String sql = "SELECT id_cliente, nome, e_mail, senha, cpf FROM cliente WHERE id_cliente= ?";
 		PreparedStatement st = c.getConnection().prepareStatement(sql);
@@ -36,9 +39,8 @@ public class ClienteDAO implements DAO<Cliente>{
 
 	@Override
 	public List<Cliente> getAll() throws SQLException {
-		PSQLConnection c = new PSQLConnection();
 		c.abrirConexao();
-		List<Cliente> vendedores = new ArrayList<Cliente>();
+		List<Cliente> clientes = new ArrayList<Cliente>();
 		String sql = "SELECT id_cliente, nome, e_mail, senha, cpf FROM cliente";
 		PreparedStatement st = c.getConnection().prepareStatement(sql);
 		ResultSet rs = st.executeQuery();
@@ -49,16 +51,15 @@ public class ClienteDAO implements DAO<Cliente>{
 			String senha = rs.getString("senha");
 			String cpf = rs.getString("cpf");
 			Cliente cliente = new Cliente(id_cliente, cpf, nome, email, senha);
-			vendedores.add(cliente);
+			clientes.add(cliente);
 		}
 		
 		c.fecharConexao();
-		return vendedores;
+		return clientes;
 	}
 
 	@Override
 	public void insert(Cliente cliente) throws SQLException {
-		PSQLConnection c = new PSQLConnection();
 		c.abrirConexao();
 		String sql = "INSERT INTO cliente(nome, e_mail, senha, cpf) VALUES(?, ?, ?, ?)";
 		PreparedStatement st = c.getConnection().prepareStatement(sql);
@@ -73,7 +74,6 @@ public class ClienteDAO implements DAO<Cliente>{
 
 	@Override
 	public void update(Cliente cliente) throws SQLException {
-		PSQLConnection c = new PSQLConnection();
 		c.abrirConexao();
 		String sql = "UPDATE cliente SET nome=?, e_mail=?, senha=?, cpf=?, comissao=? WHERE id_cliente=?";
 		PreparedStatement st = c.getConnection().prepareStatement(sql);
@@ -89,7 +89,6 @@ public class ClienteDAO implements DAO<Cliente>{
 
 	@Override
 	public void delete(long id) throws SQLException {
-		PSQLConnection c = new PSQLConnection();
 		c.abrirConexao();
 		String sql = "DELETE FROM cliente WHERE id_cliente=?";
 		PreparedStatement st = c.getConnection().prepareStatement(sql);

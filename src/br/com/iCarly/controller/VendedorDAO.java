@@ -8,20 +8,20 @@ import java.util.ArrayList;
 
 import br.com.iCarly.model.Vendedor;
 
-public class VendedorDAO implements DAO<Vendedor>{
-
-	@Override
-	public Vendedor get(long id) throws SQLException {
-		PSQLConnection c = new PSQLConnection();
+public class VendedorDAO{
+	private PSQLConnection c;
+	public VendedorDAO(){
+		c = new PSQLConnection();
+	}
+	public Vendedor get(String email) throws SQLException {
 		c.abrirConexao();
-		String sql = "SELECT id_vendedor, nome, e_mail, senha, cpf, comissao FROM vendedor WHERE id_vendedor = ?";
+		String sql = "SELECT id_vendedor, nome, e_mail, senha, cpf, comissao FROM vendedor WHERE e_mail = ?";
 		PreparedStatement st = c.getConnection().prepareStatement(sql);
-		st.setLong(1, id);
+		st.setString(1, email);
 		ResultSet rs = st.executeQuery();
 		if(rs.next()) {
 			long id_vendedor = rs.getInt("id_vendedor");
 			String nome = rs.getString("nome");
-			String email = rs.getString("e_mail");
 			String senha = rs.getString("senha");
 			String cpf = rs.getString("cpf");
 			double comissao = rs.getDouble("comissao");
@@ -35,9 +35,7 @@ public class VendedorDAO implements DAO<Vendedor>{
 		return null;
 	}
 
-	@Override
 	public List<Vendedor> getAll() throws SQLException {
-		PSQLConnection c = new PSQLConnection();
 		c.abrirConexao();
 		List<Vendedor> vendedores = new ArrayList<Vendedor>();
 		String sql = "SELECT id_vendedor, nome, e_mail, senha, cpf, comissao FROM vendedor";
@@ -58,9 +56,7 @@ public class VendedorDAO implements DAO<Vendedor>{
 		return vendedores;
 	}
 
-	@Override
 	public void insert(Vendedor vendedor) throws SQLException {
-		PSQLConnection c = new PSQLConnection();
 		c.abrirConexao();
 		String sql = "INSERT INTO vendedor(nome, e_mail, senha, cpf, comissao) VALUES(?, ?, ?, ?, ?)";
 		PreparedStatement st = c.getConnection().prepareStatement(sql);
@@ -74,9 +70,7 @@ public class VendedorDAO implements DAO<Vendedor>{
 		
 	}
 
-	@Override
 	public void update(Vendedor vendedor) throws SQLException {
-		PSQLConnection c = new PSQLConnection();
 		c.abrirConexao();
 		String sql = "UPDATE vendedor SET nome=?, e_mail=?, senha=?, cpf=?, comissao=? WHERE id_vendedor=?";
 		PreparedStatement st = c.getConnection().prepareStatement(sql);
@@ -91,9 +85,7 @@ public class VendedorDAO implements DAO<Vendedor>{
 		
 	}
 
-	@Override
 	public void delete(long id) throws SQLException {
-		PSQLConnection c = new PSQLConnection();
 		c.abrirConexao();
 		String sql = "DELETE FROM vendedor WHERE id_vendedor=?";
 		PreparedStatement st = c.getConnection().prepareStatement(sql);
@@ -101,6 +93,10 @@ public class VendedorDAO implements DAO<Vendedor>{
 		st.executeUpdate();
 		c.fecharConexao();
 		
+	}
+	public Vendedor get(long id) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

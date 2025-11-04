@@ -4,15 +4,19 @@ public abstract class Veiculo
 {
 	private long id;
 	private String placa;
+	private String cor;
+	private double preco;
 	private String modelo;
 	private int ano;
 	private double kmRodados;
 	
-	public Veiculo(long id, String placa, String modelo, int ano, double kmRodados) 
+	public Veiculo(long id, String placa, String cor, double preco, String modelo, int ano, double kmRodados) 
 	{
 		super();
 		this.id = id;
 		this.placa = placa;
+		this.cor = cor;
+		this.preco = preco;
 		this.modelo = modelo;
 		this.ano = ano;
 		this.kmRodados = kmRodados;
@@ -32,6 +36,23 @@ public abstract class Veiculo
 
 	public void setPlaca(String placa) {
 		this.placa = placa;
+	}
+	
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
+
+	public double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		this.preco = preco;
 	}
 
 	public String getModelo() {
