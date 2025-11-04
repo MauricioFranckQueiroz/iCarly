@@ -4,17 +4,15 @@ public abstract class Veiculo
 {
 	private long id;
 	private String placa;
-	private String marca;
 	private String modelo;
 	private int ano;
 	private double kmRodados;
 	
-	public Veiculo(long id, String placa, String marca, String modelo, int ano, double kmRodados) 
+	public Veiculo(long id, String placa, String modelo, int ano, double kmRodados) 
 	{
 		super();
 		this.id = id;
 		this.placa = placa;
-		this.marca = marca;
 		this.modelo = modelo;
 		this.ano = ano;
 		this.kmRodados = kmRodados;
@@ -34,14 +32,6 @@ public abstract class Veiculo
 
 	public void setPlaca(String placa) {
 		this.placa = placa;
-	}
-
-	public String getMarca() {
-		return marca;
-	}
-
-	public void setMarca(String marca) {
-		this.marca = marca;
 	}
 
 	public String getModelo() {
